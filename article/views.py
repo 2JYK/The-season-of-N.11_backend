@@ -24,7 +24,6 @@ class ArticleView(APIView):
         serialized_data = ArticleSerializer(articles, many=True).data
         return Response(serialized_data, status=status.HTTP_200_OK)
    
-   
     def post(self, request):
         data = request.data     
         data["user"] = request.user.id
@@ -35,7 +34,6 @@ class ArticleView(APIView):
             return Response(article_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
     
     def put(self, request, article_id):
         article = ArticleModel.objects.get(id=article_id)
@@ -77,8 +75,6 @@ class CommentView(APIView):
     
         return Response(comment_serializer.error, status=status.HTTP_400_BAD_REQUEST)
     
-    
-
     def delete(self, request, comment_id):
         comment = CommentModel.objects.get(id=comment_id)
         comment.delete()
@@ -107,18 +103,14 @@ class BookMarkView(APIView):
         book_mark.delete()
         return Response(status=status.HTTP_200_OK)
 
+
 class LikeView(APIView):
     def get(self, request):
         like = LikeModel.objects.all()
-        # if request.user in 
-
-
         like = LikeModel.objects.all()
         serialized_data = LikeSerializer(like, many=True).data
-        # like_count = LikeModel.objects.all()
-        # like_counts = len()
+        
         return Response(serialized_data, status=status.HTTP_200_OK)
-    
     
     def post(self, request):
         request.data["user"] = request.user.id

@@ -6,15 +6,6 @@ from article.models import BookMark as BookMarkModel
 from django.contrib import admin
 
 
-# class BookmarkAdmin(admin.ModelAdmin):
-#     list_display= ("id","article", "user", )
-
-# class LikeAdmin(admin.ModelAdmin):
-#     list_display= ("id","article", "user")
-
-# class CommentAdmin(admin.ModelAdmin):
-#     list_display= ("id", "article", "user")
-    
 # Bookmark클래스와 BookmarkAdmin클래스를 등록
 admin.site.register(BookMarkModel)
 admin.site.register(ArticleModel)

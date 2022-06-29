@@ -19,8 +19,6 @@ class LikeSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-
-    # user = serializers.SlugRelatedField(read_only=True, slug_field='fullname')  # id 값 안나올 시 삭제 ! 
     class Meta:
         model = CommentModel
         fields = "__all__"
@@ -28,8 +26,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     comment_set = CommentSerializer(many=True, read_only=True)
-    # user = UserSerializer(many=True)
-    # image =
     class Meta:
         model = ArticleModel
         fields = ["title", "content", "created_at", "modlfied_at", "comment_set", "user"]
