@@ -2,12 +2,11 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
   
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    def create_user(self, username, password=None):
         if not username:
             raise ValueError('사용자 계정을 만들어주세요')
         user = self.model(
             username=username,
-            email=email,
         )
         user.set_password(password)
         user.save(using=self._db)
