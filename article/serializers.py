@@ -1,11 +1,20 @@
 from rest_framework import serializers
 from article.models import Article as ArticleModel
-# from user.serializers import UserSerializer
+from article.models import Comment as CommentModel
+from user.serializers import UserSerializer
 
+
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CommentModel
+        fields = "__all__"
 
 class ArticleSerializer(serializers.ModelSerializer):
-    # user = UserSerializer()
+    comment_set = CommentSerializer(many=True, read_only=True)
+    user = UserSerializer()
     # image =
     class Meta:
         model = ArticleModel
-        fields = ["title", "content", "created_at", "modlfied_at"]
+        fields = ["title", "content", "created_at", "modlfied_at", "comment_set", "user"]
