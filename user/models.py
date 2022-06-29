@@ -23,7 +23,7 @@ class UserManager(BaseUserManager):
         return user
         
 class User(AbstractBaseUser):
-    username = models.CharField("사용자 계정", max_length=30)
+    username = models.CharField("사용자 계정", max_length=30, unique=True)
     password = models.CharField("비밀번호", max_length=128)
     email = models.EmailField("이메일", max_length=100)
     fullname = models.CharField("사용자 이름", max_length=20)
