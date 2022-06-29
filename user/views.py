@@ -6,6 +6,24 @@ from rest_framework import status
 from django.contrib.auth import authenticate, login, logout
 
 # from user.serializers import UserSerializer
+
+class UserView(APIView):
+    
+    # 회원 정보 조회
+    def get(self, request):
+        return Response({},status=status.HTTP_200_OK)
+
+    # 회원가입
+    def post(self, request):
+        return Response({},status=status.HTTP_200_OK)
+
+    # 회원 정보 수정
+    def put(self, request):
+        return Response({},status=status.HTTP_200_OK)
+
+    # 회원 탈퇴
+    def delete(self, request):
+        return Response({},status=status.HTTP_200_OK)
    
 class UserAPIView(APIView):
     
