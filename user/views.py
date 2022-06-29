@@ -5,7 +5,8 @@ from rest_framework import permissions
 from rest_framework import status
 from django.contrib.auth import authenticate, login, logout
 
-# from user.serializers import UserSerializer
+from user.models import User as UserModel
+from user.serializers import UserSerializer
 
 class UserView(APIView):
     
@@ -29,8 +30,8 @@ class UserAPIView(APIView):
     
     # DONE 로그인
     def post(self, request):
-        username = request.post.get('username', '')
-        password = request.post.get('password', '')
+        username = request.data.get('username', '')
+        password = request.data.get('password', '')
         
         user = authenticate(request, username=username, password=password)
         
