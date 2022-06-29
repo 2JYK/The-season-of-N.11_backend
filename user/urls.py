@@ -10,8 +10,7 @@ from user.views import SeasonTokenObtainPairView
 
 urlpatterns = [
     path('', views.UserView.as_view()),
-    # path('login/', views.UserAPIView.as_view()),
-    path('logout/', views.UserAPIView.as_view()),
+   
     # simplejwt 에서 제공하는 기본 JWT 인증 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
