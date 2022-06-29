@@ -24,13 +24,23 @@ class UserView(APIView):
             return Response(user_serializer.data, status=status.HTTP_200_OK)
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # 회원 정보 수정
+    # DONE 회원 정보 수정
     def put(self, request):
-        return Response({},status=status.HTTP_200_OK)
+        user = UserModel.objects.get(id=request.user.id)
+        user_serializer = UserSerializer(user, data=request.data, partial=True)
 
-    # 회원 탈퇴
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response(user_serializer.data, status=status.HTTP_200_OK)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # DONE 회원 탈퇴
     def delete(self, request):
-        return Response({},status=status.HTTP_200_OK)
+        user = UserModel.objects.get(id=request.user.id)
+        if user:
+            user.delete()
+            return Response({"message": "회원탈퇴 성공"}, status=status.HTTP_200_OK)
+        return Response({"message": "회원탈퇴 실패"}, status=status.HTTP_400_BAD_REQUEST)
    
 class UserAPIView(APIView):
     
