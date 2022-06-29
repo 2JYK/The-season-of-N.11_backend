@@ -10,13 +10,19 @@ from user.serializers import UserSerializer
 
 class UserView(APIView):
     
-    # 회원 정보 조회
+    # DONE 회원 정보 조회
     def get(self, request):
-        return Response({},status=status.HTTP_200_OK)
+        data = UserModel.objects.get(id=request.user.id)
+        return Response(UserSerializer(data).data, status=status.HTTP_200_OK)
 
-    # 회원가입
+    # DONE 회원가입
     def post(self, request):
-        return Response({},status=status.HTTP_200_OK)
+        user_serializer = UserSerializer(data=request.data)
+        
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response(user_serializer.data, status=status.HTTP_200_OK)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # 회원 정보 수정
     def put(self, request):
