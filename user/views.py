@@ -44,4 +44,4 @@ class UserAPIView(APIView):
     # DONE 로그아웃
     def delete(self, request):
         logout(request)
-        return Response("msg": "로그아웃 성공!!", status=status.HTTP_200_OK)
+        return Response({"msg": "로그아웃 성공!!"}, status=status.HTTP_200_OK)
