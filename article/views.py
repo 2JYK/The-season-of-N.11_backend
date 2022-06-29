@@ -1,25 +1,136 @@
+from turtle import st
 from django.shortcuts import render
 from datetime import datetime
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-import article
-from article.models import Article as ArticleModel
+from article import serializers
+
 from article.serializers import ArticleSerializer
+from article.serializers import CommentSerializer
+from article.serializers import LikeSerializer
+from article.serializers import BookMarkSerializer
+
+from article.models import Article as ArticleModel
+from article.models import Comment as CommentModel
+from article.models import Like as LikeModel
+from article.models import BookMark as BookMarkModel
 
 
 class ArticleView(APIView):
     def get(self, request):
         articles = ArticleModel.objects.all()
+        
         serialized_data = ArticleSerializer(articles, many=True).data
-        return Response(serialized_data)
+        return Response(serialized_data, status=status.HTTP_200_OK)
+   
+   
     def post(self, request):
-        data = request.data
+        data = request.data     
         data["user"] = request.user.id
         article_serializer = ArticleSerializer(data=data)
+
+        if article_serializer.is_valid():
+            article_serializer.save()
+            return Response(article_serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    def put(self, request, article_id):
+        article = ArticleModel.objects.get(id=article_id)
+        article_serializer = ArticleSerializer(article, data=request.data, partial=True)
+
         if article_serializer.is_valid():
             article_serializer.save()
             return Response(article_serializer.data, status=status.HTTP_200_OK)
         return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def put(self, request):
-        return Response({'message': 'Good~! put'}, status=status.HTTP_200_OK)
+
+
+class CommentView(APIView):
+    def get(self, request):
+        comment = CommentModel.objects.all()
+        serialized_data = CommentSerializer(comment, many=True).data
+        
+        return Response(serialized_data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        request.data["user"] = request.user.id
+        comment_serializer = CommentSerializer(data=request.data)
+
+        if comment_serializer.is_valid():
+            comment_serializer.save()
+            return Response(comment_serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(comment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, comment_id):
+        comment = CommentModel.objects.get(id=comment_id)
+        comment_serializer = CommentSerializer(comment, data=request.data, partial=True)
+        
+        print(' 67번 :', comment)
+        print(' 68번 :', comment_serializer)
+        
+        if comment_serializer.is_valid():
+            comment_serializer.save()
+            return Response(comment_serializer.data, status=status.HTTP_200_OK)
+    
+        return Response(comment_serializer.error, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+
+    def delete(self, request, comment_id):
+        comment = CommentModel.objects.get(id=comment_id)
+        comment.delete()
+        return Response(status=status.HTTP_200_OK)
+
+
+class BookMarkView(APIView):
+    def get(self, request):
+        book_mark = BookMarkModel.objects.all()
+        serialized_data = BookMarkSerializer(book_mark, many=True).data
+        
+        return Response(serialized_data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        request.data["user"] = request.user.id
+        book_mark_serializer = BookMarkSerializer(data=request.data)
+        
+        if book_mark_serializer.is_valid():
+            book_mark_serializer.save()
+            return Response(book_mark_serializer.data, status=status.HTTP_200_OK)
+
+        return Response(book_mark_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, bookmark_id):
+        book_mark = BookMarkModel.objects.get(id=bookmark_id)
+        book_mark.delete()
+        return Response(status=status.HTTP_200_OK)
+
+class LikeView(APIView):
+    def get(self, request):
+        like = LikeModel.objects.all()
+        # if request.user in 
+
+
+        like = LikeModel.objects.all()
+        serialized_data = LikeSerializer(like, many=True).data
+        # like_count = LikeModel.objects.all()
+        # like_counts = len()
+        return Response(serialized_data, status=status.HTTP_200_OK)
+    
+    
+    def post(self, request):
+        request.data["user"] = request.user.id
+        like_serializer = LikeSerializer(data=request.data)
+        
+        if like_serializer.is_valid():
+            like_serializer.save()
+            return Response(like_serializer.data, status=status.HTTP_200_OK)
+    
+        return Response(like_serializer.error, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, like_id):
+        like = LikeModel.objects.get(id=like_id)
+        like.delete()
+        return Response(status=status.HTTP_200_OK)
