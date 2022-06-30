@@ -1,11 +1,12 @@
 from turtle import st
 from django.shortcuts import render
 from datetime import datetime
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from article import serializers
 
+from article import serializers
 from article.serializers import ArticleSerializer
 from article.serializers import CommentSerializer
 from article.serializers import LikeSerializer
@@ -24,7 +25,6 @@ class ArticleView(APIView):
         serialized_data = ArticleSerializer(articles, many=True).data
         return Response(serialized_data, status=status.HTTP_200_OK)
    
-   
     def post(self, request):
         data = request.data     
         data["user"] = request.user.id
@@ -36,7 +36,6 @@ class ArticleView(APIView):
         else:
             return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    
     def put(self, request, article_id):
         article = ArticleModel.objects.get(id=article_id)
         article_serializer = ArticleSerializer(article, data=request.data, partial=True)
@@ -45,6 +44,11 @@ class ArticleView(APIView):
             article_serializer.save()
             return Response(article_serializer.data, status=status.HTTP_200_OK)
         return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, article_id):
+        article = ArticleModel.objects.get(id=article_id)
+        article.delete()
+        return Response({"message": "해당 게시글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
 
 
 class CommentView(APIView):
@@ -77,12 +81,10 @@ class CommentView(APIView):
     
         return Response(comment_serializer.error, status=status.HTTP_400_BAD_REQUEST)
     
-    
-
     def delete(self, request, comment_id):
         comment = CommentModel.objects.get(id=comment_id)
         comment.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response({"message": "해당 댓글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
 
 
 class BookMarkView(APIView):
@@ -105,20 +107,19 @@ class BookMarkView(APIView):
     def delete(self, request, bookmark_id):
         book_mark = BookMarkModel.objects.get(id=bookmark_id)
         book_mark.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response({"message": "해당 북마크가 해제 되었습니다."}, status=status.HTTP_200_OK)
+
 
 class LikeView(APIView):
     def get(self, request):
         like = LikeModel.objects.all()
         # if request.user in 
 
-
         like = LikeModel.objects.all()
         serialized_data = LikeSerializer(like, many=True).data
         # like_count = LikeModel.objects.all()
         # like_counts = len()
         return Response(serialized_data, status=status.HTTP_200_OK)
-    
     
     def post(self, request):
         request.data["user"] = request.user.id
@@ -133,4 +134,4 @@ class LikeView(APIView):
     def delete(self, request, like_id):
         like = LikeModel.objects.get(id=like_id)
         like.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response({"message": "해당 게시글에 좋아요를 취소했습니다."}, status=status.HTTP_200_OK)
