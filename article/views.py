@@ -1,6 +1,7 @@
 from turtle import st
 from django.shortcuts import render
 from datetime import datetime
+from django.db.models.query_utils import Q
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -91,19 +92,21 @@ class BookMarkView(APIView):
     def get(self, request):
         book_mark = BookMarkModel.objects.all()
         serialized_data = BookMarkSerializer(book_mark, many=True).data
-        
         return Response(serialized_data, status=status.HTTP_200_OK)
-
+    
     def post(self, request):
         request.data["user"] = request.user.id
-        book_mark_serializer = BookMarkSerializer(data=request.data)
-        
-        if book_mark_serializer.is_valid():
-            book_mark_serializer.save()
-            return Response(book_mark_serializer.data, status=status.HTTP_200_OK)
-
-        return Response(book_mark_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        bookmark_serializer = BookMarkSerializer(data=request.data)
+        existed_bookmark = BookMarkModel.objects.filter(
+            Q(user_id=request.user.id) & Q(article_id=request.data["article"])
+            )
+        if existed_bookmark:
+            existed_bookmark.delete()
+            return Response({"message":"북마크가 취소 되었습니다."}, status=status.HTTP_400_BAD_REQUEST)
+        elif bookmark_serializer.is_valid():
+            bookmark_serializer.save()
+        return Response(bookmark_serializer.data, status=status.HTTP_200_OK)
+    
     def delete(self, request, bookmark_id):
         book_mark = BookMarkModel.objects.get(id=bookmark_id)
         book_mark.delete()
