@@ -115,7 +115,7 @@ class LikeView(APIView):
         serialized_data = LikeSerializer(like, many=True).data
 
         return Response(serialized_data, status=status.HTTP_200_OK)
-    
+
     def post(self, request, *args, **kwargs):
         request.data["user"] = request.user.id
         like_serializer = LikeSerializer(data=request.data)
@@ -130,7 +130,7 @@ class LikeView(APIView):
         elif like_serializer.is_valid():
             like_serializer.save()
         return Response(like_serializer.data, status=status.HTTP_200_OK)
-  
+
     def delete(self, request, like_id):
         like = LikeModel.objects.get(id=like_id)
         like.delete()

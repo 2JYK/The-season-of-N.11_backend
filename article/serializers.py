@@ -28,6 +28,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True, source="comment_set")
+    
     likes_count = LikeSerializer(many=True, read_only=True, source="like_set")
     bookmarks_count = BookMarkSerializer(many=True, read_only=True, source="bookmark_set")
     # user = UserSerializer(many=True)
