@@ -1,4 +1,3 @@
-from turtle import st
 from django.shortcuts import render
 from datetime import datetime
 from django.db.models.query_utils import Q
@@ -72,10 +71,7 @@ class CommentView(APIView):
     def put(self, request, comment_id):
         comment = CommentModel.objects.get(id=comment_id)
         comment_serializer = CommentSerializer(comment, data=request.data, partial=True)
-        
-        print(' 67번 :', comment)
-        print(' 68번 :', comment_serializer)
-        
+    
         if comment_serializer.is_valid():
             comment_serializer.save()
             return Response(comment_serializer.data, status=status.HTTP_200_OK)
@@ -106,7 +102,7 @@ class BookMarkView(APIView):
         elif bookmark_serializer.is_valid():
             bookmark_serializer.save()
         return Response(bookmark_serializer.data, status=status.HTTP_200_OK)
-    
+
     def delete(self, request, bookmark_id):
         book_mark = BookMarkModel.objects.get(id=bookmark_id)
         book_mark.delete()
@@ -116,24 +112,25 @@ class BookMarkView(APIView):
 class LikeView(APIView):
     def get(self, request):
         like = LikeModel.objects.all()
-        # if request.user in 
-
-        like = LikeModel.objects.all()
         serialized_data = LikeSerializer(like, many=True).data
-        # like_count = LikeModel.objects.all()
-        # like_counts = len()
+
         return Response(serialized_data, status=status.HTTP_200_OK)
     
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         request.data["user"] = request.user.id
         like_serializer = LikeSerializer(data=request.data)
+        existed_like = LikeModel.objects.filter(
+            Q(user_id=request.user.id) & Q(article_id=request.data["article"])
+            )
+
+        if existed_like:
+            existed_like.delete()
+            return Response({"message":"이미 좋아요 했슈"}, status=status.HTTP_400_BAD_REQUEST)
         
-        if like_serializer.is_valid():
+        elif like_serializer.is_valid():
             like_serializer.save()
-            return Response(like_serializer.data, status=status.HTTP_200_OK)
-    
-        return Response(like_serializer.error, status=status.HTTP_400_BAD_REQUEST)
-    
+        return Response(like_serializer.data, status=status.HTTP_200_OK)
+  
     def delete(self, request, like_id):
         like = LikeModel.objects.get(id=like_id)
         like.delete()
