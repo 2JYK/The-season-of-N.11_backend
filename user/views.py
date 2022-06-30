@@ -2,13 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework import status
-from django.contrib.auth import logout
-from user.models import User as UserModel
 from user.serializers import UserSerializer
 
 from user.jwt_claim_serializer import SeasonTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from the_season.settings import SECRET_KEY, ALGORITHM
 import jwt
@@ -68,8 +67,9 @@ class OnlyAuthenticatedUserView(APIView):
         serialized_user = UserSerializer(user)
         return Response({"user_info": serialized_user.data}, status=status.HTTP_200_OK)
     
+class LogoutView(APIView):
     # 로그아웃
-    def delete(self, request):
-        logout(request)
-        print(bool(logout(request)))
-        return Response({})
+    def post(self, request):
+        response = Response({"message": "Logout success"}, status=status.HTTP_202_ACCEPTED)
+        response.delete_cookie('token')
+        return response
