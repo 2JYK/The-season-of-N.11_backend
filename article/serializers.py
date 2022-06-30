@@ -32,4 +32,4 @@ class ArticleSerializer(serializers.ModelSerializer):
     # image =
     class Meta:
         model = ArticleModel
-        fields = ["title", "content", "created_at", "modlfied_at", "comment_set", "user"]
+        fields = ["id", "title", "content", "created_at", "modlfied_at", "comment_set", "user"] 
