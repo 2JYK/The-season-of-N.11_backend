@@ -27,9 +27,12 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    comment_set = CommentSerializer(many=True, read_only=True)
+    comments = CommentSerializer(many=True, read_only=True, source="comment_set")
+    likes_count = LikeSerializer(many=True, read_only=True, source="like_set")
+    bookmarks_count = BookMarkSerializer(many=True, read_only=True, source="bookmark_set")
     # user = UserSerializer(many=True)
     # image =
     class Meta:
         model = ArticleModel
-        fields = ["id", "title", "content", "created_at", "modlfied_at", "comment_set", "user"] 
+        fields = ["id", "title", "content", "created_at", "modlfied_at",
+                  "comments", "user", "likes_count", "bookmarks_count"] 
