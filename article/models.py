@@ -16,7 +16,7 @@ class Image(models.Model):
 
 class Article(models.Model):
     user = models.ForeignKey('user.User', verbose_name="작성자", on_delete=models.CASCADE)
-    # image = models.ForeignKey('Image', verbose_name="이미지", on_delete=models.SET_NULL, null=True)
+    image = models.ForeignKey('Image', verbose_name="이미지", on_delete=models.SET_NULL, null=True)
     title = models.CharField("제목", max_length=30)
     content = models.CharField("내용", max_length=100)
     created_at = models.DateTimeField("등록 일자", auto_now_add=True)
