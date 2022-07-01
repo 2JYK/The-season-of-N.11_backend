@@ -1,11 +1,29 @@
 from rest_framework import serializers
+from article.models import Style as StyleModel
+from article.models import Image as ImageModel
 from article.models import Article as ArticleModel
 from article.models import Comment as CommentModel
 from article.models import Like as LikeModel
 from article.models import BookMark as BookMarkModel
-from user.serializers import UserSerializer
 
 
+class StyleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StyleModel
+        fields = "__all__"
+        
+        
+class ImageSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    
+    def get_user(self, obj):
+        return obj.user.username
+    
+    class Meta:
+        model = ImageModel
+        fields = "__all__" # user / style / output_img(imagefield)
+        
+        
 class BookMarkSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookMarkModel
