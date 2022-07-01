@@ -2,15 +2,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework import status
+
 from user.serializers import UserSerializer
 
 from user.jwt_claim_serializer import SeasonTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
-
-from the_season.settings import SECRET_KEY, ALGORITHM
-import jwt
 
 
 # TokenObtainPairView : urls.py에서 import했고, 토큰을 발급받기 위해 사용
