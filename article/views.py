@@ -18,19 +18,20 @@ from article.models import Like as LikeModel
 from article.models import BookMark as BookMarkModel
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from user.models import User as UserModel
 
 
 class ArticleView(APIView):
     authentication_classes = [JWTAuthentication]
     def get(self, request):
         articles = ArticleModel.objects.all()
-        
         serialized_data = ArticleSerializer(articles, many=True).data
+
         return Response(serialized_data, status=status.HTTP_200_OK)
    
-    def post(self, request):
-        
+    def post(self, request):  
         data = request.data    
+
         data["user"] = request.user.id
         article_serializer = ArticleSerializer(data=data)
 
