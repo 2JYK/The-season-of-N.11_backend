@@ -58,16 +58,10 @@ class OnlyAuthenticatedUserView(APIView):
     # 인가된 사용자의 정보 조회 
     def get(self, request):
         user = request.user
-        
+        print(user)
         if not user:
             return Response({"error": "접근 권한이 없습니다."}, status=status.HTTP_401_UNAUTHORIZED)
         
         serialized_user = UserSerializer(user)
         return Response({"user_info": serialized_user.data}, status=status.HTTP_200_OK)
     
-class LogoutView(APIView):
-    # 로그아웃
-    def post(self, request):
-        response = Response({"message": "Logout success"}, status=status.HTTP_202_ACCEPTED)
-        response.delete_cookie('token')
-        return response
