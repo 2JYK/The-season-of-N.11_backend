@@ -1,12 +1,14 @@
 from datetime import datetime
+import cv2 
+import numpy as np
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-import cv2 
-import numpy as np
-    
+from nst.models import Style as StyleModel
+from nst.models import Image as ImageModel
+
 def magic(filestr, style):
     npimg = np.fromstring(filestr, np.uint8)
     input_img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
@@ -25,15 +27,23 @@ def magic(filestr, style):
     output = output.astype('uint8')
     
     time = datetime.now().strftime('%Y-%m-%d %H:%M:%s')
-    return cv2.imwrite(f'nst/output/{time}.jpeg', output) 
 
+    cv2.imwrite(f'nst/output/{time}.jpeg', output) 
+    result = f'nst/output/{time}.jpeg'
+    
+    return result
 
 class NstView(APIView):
     def post(self, request): 
         user = request.user
+        style_info = StyleModel.objects.get(category=request.data["style"])
+        
         output_img = magic(
                 filestr=request.FILES['input'].read(),
                 style=request.data.get('style', '') 
             )
+        
+        image_info = ImageModel.objects.create(style=style_info, user=user, output_img=output_img)
+        image_info.save()
 
-        return Response({"output": output_img}, status=status.HTTP_200_OK)
+        return Response({"msg": "success!!"}, status=status.HTTP_200_OK)
