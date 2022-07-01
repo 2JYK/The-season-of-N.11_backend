@@ -66,7 +66,7 @@ class NstView(APIView):
                 filestr=request.FILES['input'].read(),
                 style=request.data.get('style', '') 
             )
-        
+        print("굿", output_img)
         image_info = ImageModel.objects.create(style=style_info, user=user, output_img=output_img)
         image_info.save()
 
@@ -80,28 +80,22 @@ class ArticleView(APIView):
         return Response(serialized_data, status=status.HTTP_200_OK)
    
     def post(self, request):
-        data = request.data     
-        data["user"] = request.user.id
-        style_info = StyleModel.objects.get(category=request.data["style"])
+        data = request.data  
+        style_info = StyleModel.objects.get(category=request.data["image_style"])
         output_img = magic(
                 filestr=request.FILES['input'].read(),
-                style=request.data.get('style', '') 
+                style=request.data.get('image_style', '') 
             )
+        print("?", output_img)
+
         data = {
-            
+            "user" : request.user.id,
+            "style" : style_info,
+            "image" : output_img,
+            "title" : request.data["title"],
+            "content" : request.data["content"]
         }
-        """
-        { # request json 으로 보낼때 
-            "user": "",
-            "image": {
-                "style": 1,
-                "output_img": "이미지파일",
-            },
-            "title": "",
-            "content": "",
-            }
-        }
-        """
+        
         article_serializer = ArticleSerializer(data=data)
 
         if article_serializer.is_valid():
