@@ -1,3 +1,6 @@
 from django.contrib import admin
+from nst.models import Style
+from nst.models import Image
 
-# Register your models here.
+admin.site.register(Style)
+admin.site.register(Image)
