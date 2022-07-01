@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     
     'user',
     'article',
-    'nst',
 ]
 
 MIDDLEWARE = [
