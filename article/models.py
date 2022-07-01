@@ -7,7 +7,6 @@ class Style(models.Model):
         return self.category
 
 class Image(models.Model):
-    user = models.ForeignKey('user.User', verbose_name="작성자", on_delete=models.CASCADE)
     style = models.ForeignKey('Style', verbose_name="스타일", on_delete=models.SET_NULL, null=True)
     output_img = models.ImageField("결과사진", upload_to="article/output", height_field=None, width_field=None, max_length=200)
     
