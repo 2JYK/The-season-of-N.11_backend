@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
+
 from article.serializers import ArticleSerializer
 from article.serializers import CommentSerializer
 from article.serializers import LikeSerializer
@@ -21,6 +22,8 @@ from article.models import BookMark as BookMarkModel
 from datetime import datetime
 import cv2 
 import numpy as np
+
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -73,6 +76,7 @@ class NstView(APIView):
         return Response({"msg": "success!!"}, status=status.HTTP_200_OK)
     
 class ArticleView(APIView):
+    authentication_classes = [JWTAuthentication]
     def get(self, request):
         articles = ArticleModel.objects.all()
         
@@ -95,7 +99,7 @@ class ArticleView(APIView):
             "title" : request.data["title"],
             "content" : request.data["content"]
         }
-        
+       
         article_serializer = ArticleSerializer(data=data)
 
         if article_serializer.is_valid():
@@ -120,6 +124,7 @@ class ArticleView(APIView):
 
 
 class CommentView(APIView):
+    authentication_classes = [JWTAuthentication]
     def get(self, request):
         comment = CommentModel.objects.all()
         serialized_data = CommentSerializer(comment, many=True).data
@@ -127,7 +132,9 @@ class CommentView(APIView):
         return Response(serialized_data, status=status.HTTP_200_OK)
 
     def post(self, request):
+        print(request.data)
         request.data["user"] = request.user.id
+        print(request.data["user"])
         comment_serializer = CommentSerializer(data=request.data)
 
         if comment_serializer.is_valid():
