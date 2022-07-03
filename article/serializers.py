@@ -21,7 +21,7 @@ class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ImageModel
-        fields = "__all__" # user / style / output_img(imagefield)
+        fields = "__all__" 
         
         
 class BookMarkSerializer(serializers.ModelSerializer):
@@ -44,7 +44,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     # user = serializers.SlugRelatedField(read_only=True, slug_field='fullname')  # id 값 안나올 시 삭제 ! 
     # user =  serializers.RelatedField(many=True, read_only='True')
-    class Meta:
+    class Meta: 
         model = CommentModel
         fields = ["article", "content", "modlfied_at", "user", "username"]
 
@@ -58,4 +58,5 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArticleModel
         fields = ["id", "title", "content", "created_at", "modlfied_at",
-                  "comments", "username", "user"] 
+                  "comments", "username", "user", "image"] 
+
