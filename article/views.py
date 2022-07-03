@@ -29,7 +29,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 def magic(filestr, style):
     npimg = np.fromstring(filestr, np.uint8)
@@ -50,8 +50,8 @@ def magic(filestr, style):
     
     time = datetime.now().strftime('%Y-%m-%d%H:%M:%s')
 
-    cv2.imwrite(f'article/output/{time}.jpeg', output) 
-    result = f'article/output/{time}.jpeg'
+    cv2.imwrite(f'output/{time}.jpeg', output) 
+    result = f'output/{time}.jpeg'
     
     return result
 
@@ -85,12 +85,17 @@ class ArticleView(APIView):
    
     def post(self, request):
         data = request.data  
-        style_info = StyleModel.objects.get(category=request.data["image_style"])
+        print(data)
+        style_info = StyleModel.objects.get(category=request.data["style"])
         output_img = magic(
                 filestr=request.FILES['input'].read(),
-                style=request.data.get('image_style', '') 
+                style=request.data.get('style', '') 
             )
-        print("?", output_img)
+        print("?", output_img, type(output_img))
+        
+        image_info = ImageModel.objects.create(style=style_info, output_img=output_img)
+        image_info.save()
+        print(image_info, type(image_info))
 
         data = {
             "user" : request.user.id,
