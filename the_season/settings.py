@@ -139,6 +139,28 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
     "http://127.0.0.1:5500",
 ]
+CORS_ORIGIN_ALLOW_ALL = True
+# access-control-allow-origin << 도메인이 생기면 설정 해줘야함?????
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "access-control-allow-origin"
+]
 
 # rest framework 설정
 REST_FRAMEWORK = {
