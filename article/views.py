@@ -93,6 +93,7 @@ class CommentView(APIView):
 
 
 class BookMarkView(APIView):
+    authentication_classes = [JWTAuthentication]
     def get(self, request):
         book_mark = BookMarkModel.objects.all()
         serialized_data = BookMarkSerializer(book_mark, many=True).data
@@ -104,9 +105,11 @@ class BookMarkView(APIView):
         existed_bookmark = BookMarkModel.objects.filter(
             Q(user_id=request.user.id) & Q(article_id=request.data["article"])
             )
+        
         if existed_bookmark:
             existed_bookmark.delete()
             return Response({"message":"북마크가 취소 되었습니다."}, status=status.HTTP_400_BAD_REQUEST)
+        
         elif bookmark_serializer.is_valid():
             bookmark_serializer.save()
         return Response(bookmark_serializer.data, status=status.HTTP_200_OK)
@@ -118,6 +121,7 @@ class BookMarkView(APIView):
 
 
 class LikeView(APIView):
+    authentication_classes = [JWTAuthentication]
     def get(self, request):
         like = LikeModel.objects.all()
         serialized_data = LikeSerializer(like, many=True).data
