@@ -20,17 +20,19 @@ class LikeSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
+    modlfied_time = serializers.SerializerMethodField()
+    
     def get_username(self,obj):
-        
         return obj.user.fullname
+    
+    def get_modlfied_time(self, obj):
+        modlfied_time = obj.modlfied_at.replace(microsecond=0).isoformat()
 
-    # user = serializers.SlugRelatedField(read_only=True, slug_field='fullname')  # id 값 안나올 시 삭제 ! 
-    # user =  serializers.RelatedField(many=True, read_only='True')
-
-
+        return modlfied_time
+    
     class Meta:
         model = CommentModel
-        fields = ["article", "content", "modlfied_at", "user", "username"]
+        fields = ["id","article", "content", "user", "username", "modlfied_at", "modlfied_time"]
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -43,12 +45,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
         return obj.user.fullname
 
-
-    # image =
     class Meta:
         model = ArticleModel
         fields = ["id", "title", "content", "created_at", "modlfied_at",
                   "comments", "username", "user", "comments", "bookmarks", "likes"] 
-
-
-

@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-
 from article.serializers import ArticleSerializer
 from article.serializers import CommentSerializer
 from article.serializers import LikeSerializer
@@ -24,14 +23,13 @@ from user.models import User as UserModel
 class ArticleView(APIView):
     authentication_classes = [JWTAuthentication]
     def get(self, request):
-        articles = ArticleModel.objects.all()
+        articles = ArticleModel.objects.all().order_by('-created_at')
         serialized_data = ArticleSerializer(articles, many=True).data
 
         return Response(serialized_data, status=status.HTTP_200_OK)
-
+   
     def post(self, request):  
-        data = request.data    
-
+        data = request.data
         data["user"] = request.user.id
         article_serializer = ArticleSerializer(data=data)
 
@@ -51,9 +49,13 @@ class ArticleView(APIView):
         return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, article_id):
+        user = request.user.id
         article = ArticleModel.objects.get(id=article_id)
-        article.delete()
-        return Response({"message": "해당 게시글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
+        if article.user.id == user:
+            article.delete()
+            return Response({"message": "해당 게시글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
+        else :
+            return Response({"message": "게시글 작성자가 아닙니다"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentView(APIView):
@@ -87,9 +89,13 @@ class CommentView(APIView):
         return Response(comment_serializer.error, status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request, comment_id):
+        user = request.user.id
         comment = CommentModel.objects.get(id=comment_id)
-        comment.delete()
-        return Response({"message": "해당 댓글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
+        if comment.user.id == user:
+            comment.delete()
+            return Response({"message": "해당 댓글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
+        else :
+            return Response({"message": "댓글 작성자가 아닙니다"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BookMarkView(APIView):
