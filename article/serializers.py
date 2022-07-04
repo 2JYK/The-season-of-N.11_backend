@@ -25,9 +25,35 @@ class ImageSerializer(serializers.ModelSerializer):
         
         
 class BookMarkSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
+    title = serializers.SerializerMethodField()
+    content = serializers.SerializerMethodField()
+    comments = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+    
+    def get_username(self, obj):
+        return obj.user.username
+    
+    def get_title(self, obj):
+        return obj.article.title  
+    
+    def get_content(self, obj):
+        return obj.article.content
+    
+    def get_comments(self, obj):
+        comment_list = []
+        for comments in obj.article.comment_set.all():
+            username = comments.user.username
+            content = comments.content
+            time_post = comments.modlfied_at.replace(microsecond=0).isoformat()
+            comment_list.append({'username': username, 'content': content, 'modlfied_time': time_post})
+        return comment_list
+    
+    def get_image(self, obj):
+        return obj.article.image
     class Meta:
         model = BookMarkModel
-        fields = "__all__"
+        fields = ["user", "id", "username", "article", "title", "content", "comments", "image"]
 
 
 class LikeSerializer(serializers.ModelSerializer):
