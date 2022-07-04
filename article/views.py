@@ -4,7 +4,7 @@ from django.db.models.query_utils import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-
+from rest_framework import permissions
 
 from article.serializers import ArticleSerializer
 from article.serializers import CommentSerializer
@@ -22,14 +22,13 @@ from article.models import BookMark as BookMarkModel
 from datetime import datetime
 import cv2 
 import numpy as np
-
+from django.core.files.base import ContentFile
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 def magic(filestr, style):
     npimg = np.fromstring(filestr, np.uint8)
@@ -52,28 +51,13 @@ def magic(filestr, style):
 
     cv2.imwrite(f'output/{time}.jpeg', output) 
     result = f'output/{time}.jpeg'
-    
+    # frame_jpg = cv2.imencode('.jpg', array)
+    # file = ContentFile(frame_jpg)
+
+    # # Get the required model instance
+
+    # instance.photo.save('myphoto.jpg', file, save=True)
     return result
-
-class NstView(APIView):
-    def get(self, request):
-        user = request.user
-        image = ImageModel.objects.filter(user_id=user.id)
-        return Response(ImageSerializer(image, many=True).data)
-    
-    def post(self, request): 
-        user = request.user
-        
-        style_info = StyleModel.objects.get(category=request.data["style"])
-        output_img = magic(
-                filestr=request.FILES['input'].read(),
-                style=request.data.get('style', '') 
-            )
-        print("굿", output_img)
-        image_info = ImageModel.objects.create(style=style_info, user=user, output_img=output_img)
-        image_info.save()
-
-        return Response({"msg": "success!!"}, status=status.HTTP_200_OK)
     
 class ArticleView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -85,17 +69,14 @@ class ArticleView(APIView):
    
     def post(self, request):
         data = request.data  
-        print(data)
         style_info = StyleModel.objects.get(category=request.data["style"])
         output_img = magic(
                 filestr=request.FILES['input'].read(),
                 style=request.data.get('style', '') 
             )
-        print("?", output_img, type(output_img))
-        
         image_info = ImageModel.objects.create(style=style_info, output_img=output_img)
         image_info.save()
-        print(image_info, type(image_info))
+        print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ", image_info, type(image_info))
 
         data = {
             "user" : request.user.id,
@@ -104,7 +85,9 @@ class ArticleView(APIView):
             "title" : request.data["title"],
             "content" : request.data["content"]
         }
-       
+        print(data['image'])
+        print(type('style'))
+        print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
         article_serializer = ArticleSerializer(data=data)
 
         if article_serializer.is_valid():
@@ -215,3 +198,30 @@ class LikeView(APIView):
         like = LikeModel.objects.get(id=like_id)
         like.delete()
         return Response({"message": "해당 게시글에 좋아요를 취소했습니다."}, status=status.HTTP_200_OK)
+
+#ㅡ 마이페이지 ㅡ#
+class MyPageView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        print(request.headers)
+        user = request.user.id
+        # articles = ArticleModel.objects.all()
+        articles = ArticleModel.objects.filter(id=user)
+
+        serialized_data = ArticleSerializer(articles, many=True).data
+        return Response(serialized_data, status=status.HTTP_200_OK)
+    
+    
+#ㅡ 북마크 ㅡ#
+class MyBookMarkView(APIView):
+    authentication_classes = [JWTAuthentication]
+    def get(self, request):
+        print(request.user)
+        
+        user = request.user.id
+        bookmarks = BookMarkModel.objects.filter(id=user)
+
+        serialized_data = BookMarkSerializer(bookmarks, many=True).data
+        return Response(serialized_data, status=status.HTTP_200_OK)
