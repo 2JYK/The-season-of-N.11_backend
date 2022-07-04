@@ -22,7 +22,6 @@ from article.models import BookMark as BookMarkModel
 
 from user.models import User as UserModel
 
-from datetime import datetime
 import cv2 
 import numpy as np
 
@@ -211,16 +210,14 @@ class LikeView(APIView):
         return Response({"message": "해당 게시글에 좋아요를 취소했습니다."}, status=status.HTTP_200_OK)
 
 
-
 #ㅡ 마이페이지 ㅡ#
 class MyPageView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
-        print(request.headers)
         user = request.user.id
-        articles = ArticleModel.objects.filter(id=user)
+        articles = ArticleModel.objects.filter(user_id=user)
         serialized_data = ArticleSerializer(articles, many=True).data
         
         return Response(serialized_data, status=status.HTTP_200_OK)
