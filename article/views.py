@@ -232,9 +232,12 @@ class MyBookMarkView(APIView):
     
     def get(self, request):
         user = request.user.id
-        bookmarks = BookMarkModel.objects.filter(id=user)
+        bookmarks = BookMarkModel.objects.filter(user_id=user)
+
         serialized_data = BookMarkSerializer(bookmarks, many=True).data
         
         return Response(serialized_data, status=status.HTTP_200_OK)
+    
+
 
 
