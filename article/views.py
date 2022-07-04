@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-
 from article.serializers import ArticleSerializer
 from article.serializers import CommentSerializer
 from article.serializers import LikeSerializer
@@ -18,20 +17,18 @@ from article.models import Like as LikeModel
 from article.models import BookMark as BookMarkModel
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from user.models import User as UserModel
-
 
 class ArticleView(APIView):
     authentication_classes = [JWTAuthentication]
     def get(self, request):
-        articles = ArticleModel.objects.all()
+        articles = ArticleModel.objects.all().order_by('-created_at')
         serialized_data = ArticleSerializer(articles, many=True).data
 
         return Response(serialized_data, status=status.HTTP_200_OK)
    
-    def post(self, request):  
-        data = request.data    
 
+    def post(self, request):  
+        data = request.data
         data["user"] = request.user.id
         article_serializer = ArticleSerializer(data=data)
 
