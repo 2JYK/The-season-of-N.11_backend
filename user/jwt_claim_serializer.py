@@ -1,5 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
 # TokenObtain == Access Token 으로 생각하면 됨! 
 # 즉, 이곳에서 claim에 어떤 정보를 담고 싶은지에 대한 커스터마이징을 진행하면 됨!
 class SeasonTokenObtainPairSerializer(TokenObtainPairSerializer):

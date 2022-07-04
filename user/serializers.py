@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from user.models import User as UserModel
 
+
 EMAIL = ("@naver.com", "@gmail.com", "@kakao.com")
 
 class UserSerializer(serializers.ModelSerializer):

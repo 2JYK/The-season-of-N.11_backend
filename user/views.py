@@ -11,29 +11,29 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-# TokenObtainPairView : urls.py에서 import했고, 토큰을 발급받기 위해 사용
+# 토큰을 발급용 #
 class SeasonTokenObtainPairView(TokenObtainPairView):
-    # serializer_class에 커스터마이징된 시리얼라이저를 넣어 준다.
     serializer_class = SeasonTokenObtainPairSerializer
 
         
 class UserView(APIView):
-    authentication_classes = [JWTAuthentication] # JWT 인증방식 클래스 지정
+    authentication_classes = [JWTAuthentication] 
      
-    # DONE 회원 정보 조회
+    # 회원 정보 조회 #
     def get(self, request):
         return Response(UserSerializer(request.user).data, status=status.HTTP_200_OK)
 
-    # DONE 회원가입
+    # 회원가입 #
     def post(self, request):
         user_serializer = UserSerializer(data=request.data)
         
         if user_serializer.is_valid():
             user_serializer.save()
             return Response(user_serializer.data, status=status.HTTP_200_OK)
+        
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # DONE 회원 정보 수정
+    # 회원 정보 수정 #
     def put(self, request):
         user = request.user
         user_serializer = UserSerializer(user, data=request.data, partial=True)
@@ -41,24 +41,28 @@ class UserView(APIView):
         if user_serializer.is_valid():
             user_serializer.save()
             return Response(user_serializer.data, status=status.HTTP_200_OK)
+        
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # DONE 회원 탈퇴
+    # 회원 탈퇴 #
     def delete(self, request):
         user = request.user
+        
         if user:
             user.delete()
             return Response({"message": "회원탈퇴 성공"}, status=status.HTTP_200_OK)
+        
         return Response({"message": "회원탈퇴 실패"}, status=status.HTTP_400_BAD_REQUEST)
+    
     
 class OnlyAuthenticatedUserView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication] 
     
-    # 인가된 사용자의 정보 조회 
+    # 인가된 사용자의 정보 조회 #
     def get(self, request):
         user = request.user
-        print(user)
+        
         if not user:
             return Response({"error": "접근 권한이 없습니다."}, status=status.HTTP_401_UNAUTHORIZED)
         

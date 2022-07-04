@@ -16,7 +16,6 @@ from article.models import BookMark as BookMarkModel
 # class CommentAdmin(admin.ModelAdmin):
 #     list_display= ("id", "article", "user")
     
-    
 # Bookmark클래스와 BookmarkAdmin클래스를 등록
 admin.site.register(StyleModel)
 admin.site.register(ImageModel)
