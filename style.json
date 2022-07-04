@@ -1,0 +1,79 @@
+[
+    {
+        "model": "article.style",
+        "pk": 1,
+        "fields": {
+            "category": "eccv16/composition_vii.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 2,
+        "fields": {
+            "category": "eccv16/la_muse.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 3,
+        "fields": {
+            "category": "eccv16/starry_night.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 4,
+        "fields": {
+            "category": "eccv16/the_wave.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 5,
+        "fields": {
+            "category": "instance_norm/candy.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 6,
+        "fields": {
+            "category": "instance_norm/feathers.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 7,
+        "fields": {
+            "category": "instance_norm/la_muse.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 8,
+        "fields": {
+            "category": "instance_norm/mosaic.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 9,
+        "fields": {
+            "category": "instance_norm/starry_night.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 10,
+        "fields": {
+            "category": "instance_norm/the_scream.t7"
+        }
+    },
+    {
+        "model": "article.style",
+        "pk": 11,
+        "fields": {
+            "category": "instance_norm/udnie.t7"
+        }
+    }
+]
