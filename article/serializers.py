@@ -35,7 +35,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommentModel
-        fields = ["article", "content", "user", "username", "modlfied_at", "modlfied_time"]
+        fields = ["id","article", "content", "user", "username", "modlfied_at", "modlfied_time"]
 
 
 class ArticleSerializer(serializers.ModelSerializer):

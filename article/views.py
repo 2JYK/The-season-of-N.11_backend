@@ -48,9 +48,13 @@ class ArticleView(APIView):
         return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, article_id):
+        user = request.user.id
         article = ArticleModel.objects.get(id=article_id)
-        article.delete()
-        return Response({"message": "해당 게시글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
+        if article.user.id == user:
+            article.delete()
+            return Response({"message": "해당 게시글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
+        else :
+            return Response({"message": "게시글 작성자가 아닙니다"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentView(APIView):
@@ -84,10 +88,13 @@ class CommentView(APIView):
         return Response(comment_serializer.error, status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request, comment_id):
+        user = request.user.id
         comment = CommentModel.objects.get(id=comment_id)
-        comment.delete()
-        return Response({"message": "해당 댓글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
-
+        if comment.user.id == user:
+            comment.delete()
+            return Response({"message": "해당 댓글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
+        else :
+            return Response({"message": "댓글 작성자가 아닙니다"}, status=status.HTTP_400_BAD_REQUEST)
 
 class BookMarkView(APIView):
     authentication_classes = [JWTAuthentication]
