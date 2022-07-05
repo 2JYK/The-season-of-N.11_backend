@@ -217,7 +217,7 @@ class MyPageView(APIView):
 
     def get(self, request):
         user = request.user.id
-        articles = ArticleModel.objects.filter(user_id=user)
+        articles = ArticleModel.objects.filter(user_id=user).order_by('-id')
         serialized_data = ArticleSerializer(articles, many=True).data
         
         return Response(serialized_data, status=status.HTTP_200_OK)
@@ -229,7 +229,7 @@ class MyBookMarkView(APIView):
     
     def get(self, request):
         user = request.user.id
-        bookmarks = BookMarkModel.objects.filter(user_id=user)
+        bookmarks = BookMarkModel.objects.filter(user_id=user).order_by('-id')
 
         serialized_data = BookMarkSerializer(bookmarks, many=True).data
         
