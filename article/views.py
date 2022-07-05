@@ -42,7 +42,7 @@ def magic(filestr, style):
     output = np.clip(output, 0, 255) 
     output = output.astype('uint8')
     
-    time = datetime.now().strftime('%Y-%m-%d%H:%M:%s')
+    time = datetime.now().strftime('%Y%m%d%H%M%S')
     cv2.imwrite(f'output/{time}.jpeg', output) 
     result = f'output/{time}.jpeg'
 
@@ -53,6 +53,10 @@ class ArticleView(APIView):
     authentication_classes = [JWTAuthentication]
     
     def get(self, request):
+        user = request.user
+        if user.is_anonymous:
+            return Response({"msg":"로그인해주세요"}, status=status.HTTP_401_UNAUTHORIZED)
+
         articles = ArticleModel.objects.all().order_by('-created_at')
         serialized_data = ArticleSerializer(articles, many=True).data
 
@@ -212,11 +216,13 @@ class LikeView(APIView):
 
 #ㅡ 마이페이지 ㅡ#
 class MyPageView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
-        user = request.user.id
+        user = request.user
+        if user.is_anonymous:
+            return Response({"msg":"로그인해주세요"}, status=status.HTTP_401_UNAUTHORIZED)
+            
         articles = ArticleModel.objects.filter(user_id=user).order_by('-id')
         serialized_data = ArticleSerializer(articles, many=True).data
         
