@@ -84,16 +84,13 @@ style {
 image {
 	"image_id(pk)": "Primary Key",
 	"style_id(fk)": "Foreign Key",
-	"article_id(fk)": "Foreign Key",
-	"user_id(fk)": "Foreign Key",
-	"input": "사용자가 입력한 사진",
-	"output": "결과 사진"
+	"output_img": "결과 사진"
 }
 
 article {
 	"article_id(pk)" : "Primary Key",
 	"user_id(fk)" : "Foreign Key",
-	"image_id(fk)": "Foreign Key",
+	"image": "이미지",
 	"title" : "제목",
 	"content" : "내용",
 	"created_at" : "등록 일자",
@@ -104,19 +101,20 @@ comment {
 	"comment_id(pk)" : "Primary Key",
 	"article_id(fk)": "Foreign Key",
 	"user_id(fk)" : "Foreign Key",
-	"content" : "내용"
+	"content" : "내용",
+	"modlfied_at" : "수정 일자"
 }
 
 like {
 	"like_id(pk)" : "Primary Key",
-	"user_id(fk)" : "Foreign Key",
 	"article(fk)" : "Foreign Key",
+	"user_id(fk)" : "Foreign Key"
 }
 
 bookmark {
 	"bookmark_id(pk)" : "Primary Key",
-	"user_id(fk)" : "Foreign Key",
-  "article_id(fk)" : "Foreign Key",
+	"article_id(fk)" : "Foreign Key",
+	"user_id(fk)" : "Foreign Key"
 }
 ```
 
@@ -208,32 +206,32 @@ Subject
 
 # 👻 API
 
-![API](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbwCgPL%2FbtrFZEPUIxV%2FYJZLdHVpjg161cDwzW13s1%2Fimg.png)
-
-![API](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcwYAKa%2FbtrFZLuAzhq%2FOQB6Fn8lbeGnbiwi9dbqB1%2Fimg.png)
-
-![API](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcwRjBT%2FbtrFUbIALAT%2FOzKGEpZkmuEQIk8sIFfiWk%2Fimg.png)
+<img width="1068" alt="1" src="https://user-images.githubusercontent.com/104303285/177476197-2cb6923a-be8d-464b-9e25-43691928cde6.png">
+<img width="992" alt="2" src="https://user-images.githubusercontent.com/104303285/177476204-2ee1f179-cca1-4f74-8cfe-c8704cecd840.png">
+<img width="932" alt="3" src="https://user-images.githubusercontent.com/104303285/177476214-c5af63ed-9039-4714-97a0-f1c442e9f8c7.png">
 
 ---
+
 
 # 👻 팀원들의 역할 및 약속
 
 ## 😇 팀원별 역할
 
 -   김경수, 정주현
-    -   배포
-    -   메인 페이지 : 적용된 대상 이미지를 보여주는 페이지
-    -   게시글 업로드 페이지 :이미지 업로드하여 보여주는 페이지
+    -   배포 : Gunicorn | AWS - EC2, S3, Cloud9 IDE 
+    -   메인 페이지
+    - 	게시글 상세 페이지
+    -   게시글 업로드 페이지
     -   댓글
     -   좋아요
     -   북마크
 -   정대근, 윤슬기
-    -   유화제작 인공지능 기술
+    -   유화제작 인공지능 기술 : 이미지 생성, 조회, 저장(서버, DB, 브라우저)
     -   회원가입
     -   로그인
     -   마이 페이지
-        -   북마크 모은 페이지
-        -   게시글 수정 및 삭제
+    -   북마크 페이지
+    -   게시글 수정 및 삭제
 
 ## 😇 우리 팀의 약속
 
