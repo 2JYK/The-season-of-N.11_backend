@@ -1,7 +1,7 @@
 # The-season-of-N.11_frontend
 ☠️ [S.A] 유화제작-Django Project ☠
 ---
-backend repo ->  https://github.com/2JYK/The-season-of-N.11_frontend/
+frontend repo ->  https://github.com/2JYK/The-season-of-N.11_frontend/
 
 # 👻 프로젝트 주제
 
@@ -67,59 +67,6 @@ backend repo ->  https://github.com/2JYK/The-season-of-N.11_frontend/
 ![mockup](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FM7SBU%2FbtrFZdSFHcO%2FpEnrZBks6tez01kwFxsowK%2Fimg.png)
 ## 😇 ERD 작성
 ![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOhP0p%2FbtrFXYWawfh%2FK8nnxUm26abG8R7pm3yMhK%2Fimg.png)
-
-```
-user {
-	"user_id(pk)" : "Primary Key",
-	"username" : "사용자 아이디",
-	"password" : "비밀번호",
-	"email" : "이메일",
-	"fullname": "이름",
-	"join_date": "생성시간",
-}
-
-style {
-	"style_id(pk)": "Primary Key",
-	"style_image": "풍경 사진",
-	"category": "카테고리"
-}
-
-image {
-	"image_id(pk)": "Primary Key",
-	"style_id(fk)": "Foreign Key",
-	"output_img": "결과 사진"
-}
-
-article {
-	"article_id(pk)" : "Primary Key",
-	"user_id(fk)" : "Foreign Key",
-	"image": "이미지",
-	"title" : "제목",
-	"content" : "내용",
-	"created_at" : "등록 일자",
-	"modlfied_at" : "수정 일자"
-}
-
-comment {
-	"comment_id(pk)" : "Primary Key",
-	"article_id(fk)": "Foreign Key",
-	"user_id(fk)" : "Foreign Key",
-	"content" : "내용",
-	"modlfied_at" : "수정 일자"
-}
-
-like {
-	"like_id(pk)" : "Primary Key",
-	"article(fk)" : "Foreign Key",
-	"user_id(fk)" : "Foreign Key"
-}
-
-bookmark {
-	"bookmark_id(pk)" : "Primary Key",
-	"article_id(fk)" : "Foreign Key",
-	"user_id(fk)" : "Foreign Key"
-}
-```
 
 ---
 
