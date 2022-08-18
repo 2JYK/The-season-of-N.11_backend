@@ -157,9 +157,11 @@ Subject
 ---
 
 # 👻 API
+<img width="1176" alt="스크린샷 2022-08-18 오후 2 50 40" src="https://user-images.githubusercontent.com/104303285/185303999-8ad88f51-c369-4288-910b-624a92ce4e64.png">
 
-<img width="1068" alt="1" src="https://user-images.githubusercontent.com/104303285/177476197-2cb6923a-be8d-464b-9e25-43691928cde6.png">
-<img width="992" alt="2" src="https://user-images.githubusercontent.com/104303285/177476204-2ee1f179-cca1-4f74-8cfe-c8704cecd840.png">
+<img width="1141" alt="스크린샷 2022-08-18 오후 2 50 17" src="https://user-images.githubusercontent.com/104303285/185304009-60d545a6-3dec-4a4e-a468-bf15c03fba25.png">
+
+
 
 ---
 
