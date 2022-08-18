@@ -1,4 +1,4 @@
-# The-season-of-N.11_frontend
+# The-season-of-N.11_backend
 ☠️ [S.A] 유화제작-Django Project ☠
 ---
 frontend repo ->  https://github.com/2JYK/The-season-of-N.11_frontend/
