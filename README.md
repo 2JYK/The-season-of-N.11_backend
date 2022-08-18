@@ -212,8 +212,6 @@ Subject
 
 ![API](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcwYAKa%2FbtrFZLuAzhq%2FOQB6Fn8lbeGnbiwi9dbqB1%2Fimg.png)
 
-![API](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcwRjBT%2FbtrFUbIALAT%2FOzKGEpZkmuEQIk8sIFfiWk%2Fimg.png)
-
 ---
 
 # 👻 팀원들의 역할 및 약속
