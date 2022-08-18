@@ -1,17 +1,21 @@
 # The-season-of-N.11_backend
-☠️ [S.A] 유화제작-Django Project ☠
----
 frontend repo ->  https://github.com/2JYK/The-season-of-N.11_frontend/
 
-# 👻 프로젝트 주제
+# 프로젝트 주제
 
 -   유화 제작
     -   유화제작 인공지능 기술(NST)를 사용해서 사용자가 이미지를 넣으면 유화 스타일이 적용된 이미지로 변환되어 출력되는 서비스
     -   이미지 생성 기술(Generative models)을 이용해서 사용자가 흥미를 느낄 수 있는 서비스
 
----
 
-# 👻 필수 구현 기술
+# ⚙ 개발환경
+## back-end : <img src="https://img.shields.io/badge/python-3.8.6-3776AB?style=for-the-badge&logo=python&logoColor=white"> <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
+
+## front-end : <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
+
+## deploy : <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
+
+# 필수 구현 기술
 
 -   Django Rest-framework
 -   유화제작 인공지능 기술(NST)
@@ -19,9 +23,7 @@ frontend repo ->  https://github.com/2JYK/The-season-of-N.11_frontend/
 -   회원가입/로그인 기능 - JWT
 -   AWS EC2 배포
 
----
-
-# 👻 이번 프로젝트 목표
+# 이번 프로젝트 목표
 
 -   정기적인 상호 피드백 및 코드 리뷰 시간
 -   git hub
@@ -36,43 +38,77 @@ frontend repo ->  https://github.com/2JYK/The-season-of-N.11_frontend/
     -   머신러닝
     -   북마크, 좋아요 기능 추가
 
----
 
-# 👻 필수 포함 사항
+# 기능 명세서
+-   회원가입/로그인
 
-## 😇 필수 기능
+    -   아이디와 비밀번호를 입력해 회원가입 또는 로그인을 할 수 있습니다.
+        -   회원가입은 아이디와 패스워드가 6자리 이상 이여야 가능합니다.
+        -   아이디가 중복되면 회원가입이 불가합니다.
+    -   로그인이 된 상태에선 회원가입/로그인 페이지에 접속이 불가합니다.
+    -   추가 : 소셜 로그인 회원가입/로그인 기능
+    -   추가 : 비밀번호 찾기
 
--   DRF 사용
-    -   회원 기능 포함 (JWT 토큰을 이용)
--   프론트엔드와 백엔드를 별도의 레포지토리에서 기능별 관리
--   CRUD 기능
--   유화제작 인공지능 기술(NST)
--   AWS EC2 배포
+-   메인 페이지
 
-## 😇 추가 기능
+    -   여러 사용자가 업로드한 게시물을 한 눈에 확인할 수 있습니다. (역순)
+    -   각 게시물에 좋아요와 북마크를 누를 수 있습니다.
+    -   업로드 버튼을 누르면 업로드 페이지로 이동합니다.
+    -   페이지 네이션을 통해 2 x 3 이 넘어가면 페이지가 생깁니다.
+    -   게시물을 클릭 시 게시글의 상세페이지로 이동합니다.
 
--   생성된 이미지는 S3에 올려서 관리
--   생성된 결과물을 사이트에 게시할 수 있게 설정(노출 시간, 공개 여부 선택 가능)
--   게시물에 대해 댓글 기능 추가
--   게시물에 대해 좋아요 기능 추가
--   마이페이지에 본인이 생성한 이미지/게시글을 확인할 수 있는 기능 추가
--   생성된 게시물에 대한 공유기능(메일 보내기 등) 추가
--   소셜 로그인 회원가입/로그인 기능 추가
+-   업로드 페이지
 
----
+    -   사진을 선택하여 업로드 하면 머신러닝을 통해 사진의 스타일을 변환합니다.
+    -   사용자는 자신이 원하는 계절감의 사진을 선택합니다.
+    -   머신러닝의 결과물이 나오면 사진에 맞는 코멘트를 작성한 뒤 사진을 게시합니다.
+    -   제목은 30자, 설명은 100자 이하로만 작성할수 있습니다.
+    -   업로드 버튼을 클릭 시 메인페이지로 보내집니다.
 
-# 👻 MOCKUP 및 DB 작성
+-   마이 페이지
 
-## 😇 MOCKUP
-![mockup](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FM7SBU%2FbtrFZdSFHcO%2FpEnrZBks6tez01kwFxsowK%2Fimg.png)
-## 😇 ERD 작성
+    -   현재 로그인한 사용자가 올린 사진 및 북마크한 사진을 확인할 수 있습니다.
+    -   기본값으로는 사용자가 올린 사진들이 보여집니다.
+    -   무한 스크롤을 이용하여 보여집니다.
+    -   게시물을 클릭 시 게시글의 상세페이지로 이동합니다.
+    -   사용자가 올린 사진에 대한 수정 및 삭제가 가능합니다.
+
+-   게시글 상세 페이지
+
+    -   다른 사용자가 댓글을 작성할 수 있습니다.
+    -   다른 사용자의 글에 북마크를 남겨 마이 페이지의 북마크 탭에서 확인할 수 있습니다.
+    -   좋아요 카운트 숫자를 보여주고 누릅니다.
+
+-   게시글 수정 페이지
+
+    -   로그인한 사용자가 작성한 사진 중 수정할 사진을 선택하면 해당 화면으로 들어와
+    -   사용자가 수정을 진행할 수 있습니다.
+    -   취소 버튼을 누르면 마이페이지로 다시 돌아갑니다.
+    -   수정할 수 있는 내용은 아래와 같습니다.
+        -   게시글의 제목
+        -   게시글의 설명
+    -   우상단의 삭제 버튼을 눌러 해당 게시글을 삭제할 수 있습니다.
+
+
+
+
+# API 명세서
+<img width="1176" alt="스크린샷 2022-08-18 오후 2 50 40" src="https://user-images.githubusercontent.com/104303285/185303999-8ad88f51-c369-4288-910b-624a92ce4e64.png">
+
+<img width="1141" alt="스크린샷 2022-08-18 오후 2 50 17" src="https://user-images.githubusercontent.com/104303285/185304009-60d545a6-3dec-4a4e-a468-bf15c03fba25.png">
+
+
+
+# DATABASE
 <img width="1213" alt="season" src="https://user-images.githubusercontent.com/104303285/185300027-4c89cd18-10f6-478c-9044-996720b03c6c.png">
 
----
 
-# 👻 컨벤션
+# 와이어 프레임
+![mockup](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FM7SBU%2FbtrFZdSFHcO%2FpEnrZBks6tez01kwFxsowK%2Fimg.png)
 
-## 😇 GitHub
+# 컨벤션
+
+## GitHub
 
 -   프론트엔드
     -   브랜치 (app 별로 )
@@ -101,74 +137,9 @@ Subject
 - 72자를 넘기지 않고, 모든 커밋에 본문 내용을 작성할 필요는 없음.
 ```
 
----
+# 팀원들의 역할 및 약속
 
-# 👻 기능 명세서
-
-## 😇 회원가입/로그인
-
--   아이디와 비밀번호를 입력해 회원가입 또는 로그인을 할 수 있습니다.
-    -   회원가입은 아이디와 패스워드가 6자리 이상 이여야 가능합니다.
-    -   아이디가 중복되면 회원가입이 불가합니다.
--   로그인이 된 상태에선 회원가입/로그인 페이지에 접속이 불가합니다.
--   추가 : 소셜 로그인 회원가입/로그인 기능
--   추가 : 비밀번호 찾기
-
-## 😇 메인 페이지
-
--   여러 사용자가 업로드한 게시물을 한 눈에 확인할 수 있습니다. (역순)
--   각 게시물에 좋아요와 북마크를 누를 수 있습니다.
--   업로드 버튼을 누르면 업로드 페이지로 이동합니다.
--   페이지 네이션을 통해 2 x 3 이 넘어가면 페이지가 생깁니다.
--   게시물을 클릭 시 게시글의 상세페이지로 이동합니다.
-
-## 😇 업로드 페이지
-
--   사진을 선택하여 업로드 하면 머신러닝을 통해 사진의 스타일을 변환합니다.
--   사용자는 자신이 원하는 계절감의 사진을 선택합니다.
--   머신러닝의 결과물이 나오면 사진에 맞는 코멘트를 작성한 뒤 사진을 게시합니다.
--   제목은 30자, 설명은 100자 이하로만 작성할수 있습니다.
--   업로드 버튼을 클릭 시 메인페이지로 보내집니다.
-
-## 😇 마이 페이지
-
--   현재 로그인한 사용자가 올린 사진 및 북마크한 사진을 확인할 수 있습니다.
--   기본값으로는 사용자가 올린 사진들이 보여집니다.
--   무한 스크롤을 이용하여 보여집니다.
--   게시물을 클릭 시 게시글의 상세페이지로 이동합니다.
--   사용자가 올린 사진에 대한 수정 및 삭제가 가능합니다.
-
-## 😇 게시글 상세 페이지
-
--   다른 사용자가 댓글을 작성할 수 있습니다.
--   다른 사용자의 글에 북마크를 남겨 마이 페이지의 북마크 탭에서 확인할 수 있습니다.
--   좋아요 카운트 숫자를 보여주고 누릅니다.
-
-## 😇 게시글 수정 페이지
-
--   로그인한 사용자가 작성한 사진 중 수정할 사진을 선택하면 해당 화면으로 들어와
--   사용자가 수정을 진행할 수 있습니다.
--   취소 버튼을 누르면 마이페이지로 다시 돌아갑니다.
--   수정할 수 있는 내용은 아래와 같습니다.
-    -   게시글의 제목
-    -   게시글의 설명
--   우상단의 삭제 버튼을 눌러 해당 게시글을 삭제할 수 있습니다.
-
----
-
-# 👻 API
-<img width="1176" alt="스크린샷 2022-08-18 오후 2 50 40" src="https://user-images.githubusercontent.com/104303285/185303999-8ad88f51-c369-4288-910b-624a92ce4e64.png">
-
-<img width="1141" alt="스크린샷 2022-08-18 오후 2 50 17" src="https://user-images.githubusercontent.com/104303285/185304009-60d545a6-3dec-4a4e-a468-bf15c03fba25.png">
-
-
-
----
-
-
-# 👻 팀원들의 역할 및 약속
-
-## 😇 팀원별 역할
+## 팀원별 역할
 
 -   김경수, 정주현
     -   배포 : Gunicorn | AWS - EC2, S3, Cloud9 IDE 
@@ -186,7 +157,7 @@ Subject
     -   북마크 페이지
     -   게시글 수정 및 삭제
 
-## 😇 우리 팀의 약속
+## 우리 팀의 약속
 
 -   서로의 의견을 존중해 주기
 -   프로젝트가 어렵고 힘들어도 웃기
