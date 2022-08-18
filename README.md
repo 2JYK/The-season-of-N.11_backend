@@ -66,7 +66,7 @@ frontend repo ->  https://github.com/2JYK/The-season-of-N.11_frontend/
 ## 😇 MOCKUP
 ![mockup](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FM7SBU%2FbtrFZdSFHcO%2FpEnrZBks6tez01kwFxsowK%2Fimg.png)
 ## 😇 ERD 작성
-![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOhP0p%2FbtrFXYWawfh%2FK8nnxUm26abG8R7pm3yMhK%2Fimg.png)
+<img width="1213" alt="season" src="https://user-images.githubusercontent.com/104303285/185300027-4c89cd18-10f6-478c-9044-996720b03c6c.png">
 
 ---
 
