@@ -46,7 +46,7 @@ class BookMarkSerializer(serializers.ModelSerializer):
             username = comments.user.username
             content = comments.content
             time_post = comments.modlfied_at.replace(microsecond=0).isoformat()
-            comment_list.append({'username': username, 'content': content, 'modlfied_time': time_post})
+            comment_list.append({"username": username, "content": content, "modlfied_time": time_post})
         return comment_list
     
     def get_image(self, obj):

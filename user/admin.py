@@ -4,10 +4,10 @@ from user.models import User as UserModel
 
 
 class UserAdmin(BaseUserAdmin):
-    list_display = ('id', 'username', 'fullname', 'email')
-    list_display_links = ('username',)
-    list_filter = ('username',)
-    search_fields = ('username', 'email', )
+    list_display = ("id", "username", "fullname", "email")
+    list_display_links = ("username",)
+    list_filter = ("username",)
+    search_fields = ("username", "email", )
     
     fieldsets = (
         ("info", {"fields": ("username", "password", "email", "fullname", "join_date", )}),
@@ -17,9 +17,9 @@ class UserAdmin(BaseUserAdmin):
     
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            return ('username', 'join_date',)
+            return ("username", "join_date",)
         else:
-            return ('join_date', )
+            return ("join_date", )
 
 admin.site.register(UserModel, UserAdmin)
 

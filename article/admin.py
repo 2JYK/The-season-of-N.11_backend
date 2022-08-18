@@ -6,15 +6,6 @@ from article.models import Comment as CommentModel
 from article.models import Like as LikeModel
 from article.models import BookMark as BookMarkModel 
 
-
-# class BookmarkAdmin(admin.ModelAdmin):
-#     list_display= ("id","article", "user", )
-
-# class LikeAdmin(admin.ModelAdmin):
-#     list_display= ("id","article", "user")
-
-# class CommentAdmin(admin.ModelAdmin):
-#     list_display= ("id", "article", "user")
     
 # Bookmark클래스와 BookmarkAdmin클래스를 등록
 admin.site.register(StyleModel)

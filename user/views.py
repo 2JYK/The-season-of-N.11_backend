@@ -8,7 +8,6 @@ from user.serializers import UserSerializer
 from user.jwt_claim_serializer import SeasonTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # 토큰을 발급용 #

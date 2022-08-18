@@ -11,8 +11,8 @@ class SeasonTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         # 로그인한 사용자의 클레임 설정하기.
-        token['id'] = user.id
-        token['username'] = user.username
-        token['email'] = user.email
+        token["id"] = user.id
+        token["username"] = user.username
+        token["email"] = user.email
 
         return token

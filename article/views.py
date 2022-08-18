@@ -4,14 +4,12 @@ from django.db.models.query_utils import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework import permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from article.serializers import ArticleSerializer
 from article.serializers import CommentSerializer
 from article.serializers import LikeSerializer
 from article.serializers import BookMarkSerializer
-from article.serializers import ImageSerializer
 
 from article.models import Style as StyleModel
 from article.models import Image as ImageModel
@@ -20,7 +18,6 @@ from article.models import Comment as CommentModel
 from article.models import Like as LikeModel
 from article.models import BookMark as BookMarkModel
 
-from user.models import User as UserModel
 
 import cv2 
 import numpy as np
@@ -29,7 +26,7 @@ import numpy as np
 def magic(filestr, style):
     npimg = np.fromstring(filestr, np.uint8)
     input_img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
-    style = cv2.dnn.readNetFromTorch(f'article/models/{style}')
+    style = cv2.dnn.readNetFromTorch(f"article/models/{style}")
     
     h, w, c = input_img.shape
     input_img = cv2.resize(input_img, dsize=(500, int(h / w * 500)))
@@ -40,11 +37,11 @@ def magic(filestr, style):
     output = output.squeeze().transpose((1, 2, 0)) 
     output += MEAN_VALUE 
     output = np.clip(output, 0, 255) 
-    output = output.astype('uint8')
+    output = output.astype("uint8")
     
-    time = datetime.now().strftime('%Y-%m-%d%H:%M:%s')
-    cv2.imwrite(f'output/{time}.jpeg', output) 
-    result = f'output/{time}.jpeg'
+    time = datetime.now().strftime("%Y-%m-%d%H:%M:%s")
+    cv2.imwrite(f"output/{time}.jpeg", output) 
+    result = f"output/{time}.jpeg"
 
     return result
     
@@ -53,7 +50,7 @@ class ArticleView(APIView):
     authentication_classes = [JWTAuthentication]
     
     def get(self, request):
-        articles = ArticleModel.objects.all().order_by('-created_at')
+        articles = ArticleModel.objects.all().order_by("-created_at")
         serialized_data = ArticleSerializer(articles, many=True).data
 
         return Response(serialized_data, status=status.HTTP_200_OK)
@@ -62,8 +59,8 @@ class ArticleView(APIView):
         data = request.data  
         style_info = StyleModel.objects.get(category=request.data["style"])
         output_img = magic(
-                filestr=request.FILES['input'].read(),
-                style=request.data.get('style', '') 
+                filestr=request.FILES["input"].read(),
+                style=request.data.get("style", "") 
             )
         image_info = ImageModel.objects.create(style=style_info, output_img=output_img)
         image_info.save()
@@ -216,7 +213,7 @@ class MyPageView(APIView):
 
     def get(self, request):
         user = request.user.id
-        articles = ArticleModel.objects.filter(user_id=user).order_by('-id')
+        articles = ArticleModel.objects.filter(user_id=user).order_by("-id")
         serialized_data = ArticleSerializer(articles, many=True).data
         
         return Response(serialized_data, status=status.HTTP_200_OK)
@@ -228,7 +225,7 @@ class MyBookMarkView(APIView):
     
     def get(self, request):
         user = request.user.id
-        bookmarks = BookMarkModel.objects.filter(user_id=user).order_by('-id')
+        bookmarks = BookMarkModel.objects.filter(user_id=user).order_by("-id")
 
         serialized_data = BookMarkSerializer(bookmarks, many=True).data
         
