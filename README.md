@@ -65,61 +65,6 @@
 ## 😇 ERD 작성
 ![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOhP0p%2FbtrFXYWawfh%2FK8nnxUm26abG8R7pm3yMhK%2Fimg.png)
 
-```
-user {
-	"user_id(pk)" : "Primary Key",
-	"username" : "사용자 아이디",
-	"password" : "비밀번호",
-	"email" : "이메일",
-	"fullname": "이름",
-	"join_date": "생성시간",
-}
-
-style {
-	"style_id(pk)": "Primary Key",
-	"style_image": "풍경 사진",
-	"category": "카테고리"
-}
-
-image {
-	"image_id(pk)": "Primary Key",
-	"style_id(fk)": "Foreign Key",
-	"article_id(fk)": "Foreign Key",
-	"user_id(fk)": "Foreign Key",
-	"input": "사용자가 입력한 사진",
-	"output": "결과 사진"
-}
-
-article {
-	"article_id(pk)" : "Primary Key",
-	"user_id(fk)" : "Foreign Key",
-	"image_id(fk)": "Foreign Key",
-	"title" : "제목",
-	"content" : "내용",
-	"created_at" : "등록 일자",
-	"modlfied_at" : "수정 일자"
-}
-
-comment {
-	"comment_id(pk)" : "Primary Key",
-	"article_id(fk)": "Foreign Key",
-	"user_id(fk)" : "Foreign Key",
-	"content" : "내용"
-}
-
-like {
-	"like_id(pk)" : "Primary Key",
-	"user_id(fk)" : "Foreign Key",
-	"article(fk)" : "Foreign Key",
-}
-
-bookmark {
-	"bookmark_id(pk)" : "Primary Key",
-	"user_id(fk)" : "Foreign Key",
-  "article_id(fk)" : "Foreign Key",
-}
-```
-
 ---
 
 # 👻 컨벤션
@@ -211,8 +156,6 @@ Subject
 ![API](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbwCgPL%2FbtrFZEPUIxV%2FYJZLdHVpjg161cDwzW13s1%2Fimg.png)
 
 ![API](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcwYAKa%2FbtrFZLuAzhq%2FOQB6Fn8lbeGnbiwi9dbqB1%2Fimg.png)
-
-![API](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcwRjBT%2FbtrFUbIALAT%2FOzKGEpZkmuEQIk8sIFfiWk%2Fimg.png)
 
 ---
 
